@@ -121,6 +121,8 @@
                             <li><a class="dropdown-item" data-pp="1" href="#adsr">ADSR</a></li>
                             <li><a class="dropdown-item" data-pp="1" href="#tremolo">Tremolo</a></li>
                             <li><a class="dropdown-item" data-pp="1" href="#echo">Echo</a></li>
+                            <li><a class="dropdown-item" data-pp="1" href="#pitch">Pitch Scaling</a></li>
+                            <li><a class="dropdown-item" data-pp="1" href="#time">Time Scaling</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -133,6 +135,8 @@
                             <li><a class="dropdown-item" data-pp="2" href="#adsr">ADSR</a></li>
                             <li><a class="dropdown-item" data-pp="2" href="#tremolo">Tremolo</a></li>
                             <li><a class="dropdown-item" data-pp="2" href="#echo">Echo</a></li>
+                            <li><a class="dropdown-item" data-pp="1" href="#pitch">Pitch Scaling</a></li>
+                            <li><a class="dropdown-item" data-pp="1" href="#time">Time Scaling</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -145,6 +149,8 @@
                             <li><a class="dropdown-item" data-pp="3" href="#adsr">ADSR</a></li>
                             <li><a class="dropdown-item" data-pp="3" href="#tremolo">Tremolo</a></li>
                             <li><a class="dropdown-item" data-pp="3" href="#echo">Echo</a></li>
+                            <li><a class="dropdown-item" data-pp="1" href="#pitch">Pitch Scaling</a></li>
+                            <li><a class="dropdown-item" data-pp="1" href="#time">Time Scaling</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -157,6 +163,8 @@
                             <li><a class="dropdown-item" data-pp="4" href="#adsr">ADSR</a></li>
                             <li><a class="dropdown-item" data-pp="4" href="#tremolo">Tremolo</a></li>
                             <li><a class="dropdown-item" data-pp="4" href="#echo">Echo</a></li>
+                            <li><a class="dropdown-item" data-pp="1" href="#pitch">Pitch Scaling</a></li>
+                            <li><a class="dropdown-item" data-pp="1" href="#time">Time Scaling</a></li>
                         </ul>
                     </li>
 					<li class="nav-item dropdown">
@@ -169,6 +177,8 @@
                             <li><a class="dropdown-item" data-pp="5" href="#adsr">ADSR</a></li>
                             <li><a class="dropdown-item" data-pp="5" href="#tremolo">Tremolo</a></li>
                             <li><a class="dropdown-item" data-pp="5" href="#echo">Echo</a></li>
+                            <li><a class="dropdown-item" data-pp="1" href="#pitch">Pitch Scaling</a></li>
+                            <li><a class="dropdown-item" data-pp="1" href="#time">Time Scaling</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -516,6 +526,40 @@
                         </div>
                     </div>
                     
+                    <div class="tab-pane" id="pitch">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-3">
+                                    <label for="pitch-multiplier">Pitch Multiplier:</label>
+                                    <div class="input-group">
+                                        <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
+                                            <input class="custom-range" id="pitch-multiplier" type="range" value="1" min="0.1" max="5" step="0.1"
+                                             oninput="$(this).parents('.input-group').find('.input-group-text').html($(this).val())">
+                                        </div>
+                                        <div class="input-group-append"><span class="input-group-text d-block" style="width: 3.5em">1</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="time">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-3">
+                                    <label for="time-multiplier">Speed Multiplier:</label>
+                                    <div class="input-group">
+                                        <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
+                                            <input class="custom-range" id="time-multiplier" type="range" value="1" min="0.5" max="3" step="0.1"
+                                             oninput="$(this).parents('.input-group').find('.input-group-text').html($(this).val())">
+                                        </div>
+                                        <div class="input-group-append"><span class="input-group-text d-block" style="width: 3.5em">1</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

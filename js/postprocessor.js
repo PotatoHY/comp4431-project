@@ -177,6 +177,14 @@ Postprocessor = {
                 }
                 break;
             
+            case "pitch":
+                //pitch scaling
+                break;
+
+            case "time":
+                //time scaling
+                break;
+            
             default:
                 // Do nothing
                 break;
