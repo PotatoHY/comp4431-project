@@ -302,6 +302,11 @@ function Channel(elementContext) {
         if(enabledPostProcessing && pass !== -1) {
             durationAdjustment = parseFloat($("#adsr-release-duration").data("p" + (pass + 1)))
         }
+        pass = currentEffects.indexOf("time");
+        var durationMultiplier = 1;
+        if(enabledPostProcessing && pass !== -1) {
+            durationMultiplier = 1 / parseFloat($("#time-multiplier").data("p" + (pass + 1)))
+        }
 
         // Adjust the maximum amplitude of this channel
         var amp = 1.0;
@@ -317,8 +322,8 @@ function Channel(elementContext) {
 
         // Find the duration of the music
         for(var i = 0; i < data.length; ++i) {
-            var newDuration = data[i].startTime;
-            newDuration += useDuration ? data[i].duration + durationAdjustment : 6.0;
+            var newDuration = data[i].startTime * durationMultiplier;
+            newDuration += useDuration ? (data[i].duration + durationAdjustment) * durationMultiplier : 6.0;
             maxDuration = Math.max(newDuration, maxDuration);
         }
         maxDuration = Math.ceil(maxDuration * sampleRate);
@@ -358,7 +363,7 @@ function Channel(elementContext) {
             }
 
             // Add the note to the music
-            var startIndex = Math.floor(data[i].startTime * sampleRate);
+            var startIndex = Math.floor(data[i].startTime * durationMultiplier * sampleRate);
             for(var j = 0; j < newWaveformAudioSequence.length && startIndex + j < newMusicAudioSequence.length; ++j) {
                 newMusicAudioSequence[startIndex + j] += newWaveformAudioSequence[j];
             }
