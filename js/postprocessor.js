@@ -182,7 +182,58 @@ Postprocessor = {
                 break;
 
             case "time":
-                //time scaling
+                var multiplier = parseFloat($("#time-multiplier").data("p" + pass));
+                if (multiplier == 1) break;
+
+                const Ls = sampleRate * 0.02;          // cut 15ms for every N samples
+                var repeatNum;                          // find N according to multiplier, repeat splice for every N samples
+
+                if (multiplier > 1)
+                    repeatNum = Math.floor((Ls * multiplier) / (multiplier - 1));
+                else 
+                    repeatNum = Math.floor(Ls / (1/multiplier - 1));
+                    
+                for(var c = 0; c < channels.length; ++c) {
+                    var audioSequence = channels[c].audioSequenceReference;
+                    const length = audioSequence.data.length
+
+                    for(var i = 0; i < length / repeatNum; ++i) {
+                        if (multiplier > 1) {
+                            const sequence = audioSequence.data.slice(i * (repeatNum - Ls), i * (repeatNum - Ls) + Ls);
+
+                            // remove the sequence from the audio
+                            audioSequence.data.splice(i * (repeatNum - Ls), Ls);
+
+                            // crossfade the beginning of the sequence with audio data right after
+                            for (var j = 0; j < sequence.length; ++j) {
+                                if (i * (repeatNum - Ls) + j >= audioSequence.data.length)
+                                    break;
+                                audioSequence.data[i * (repeatNum - Ls) + j] *= (j / sequence.length)
+                                audioSequence.data[i * (repeatNum - Ls) + j] += sequence[j] * (1 - j / sequence.length)
+                            }
+
+                        }
+                        else {
+                            const sequence = audioSequence.data.slice(i * (repeatNum + Ls), i * (repeatNum + Ls) + Ls);
+                            const afterSequence = audioSequence.data.slice(i * (repeatNum + Ls) + Ls, i * (repeatNum + Ls) + 2 * Ls);
+
+                            // repeat the sequence from the audio
+                            audioSequence.data.splice.apply(audioSequence.data, [i * (repeatNum + Ls), 0].concat(sequence))
+
+                            // crossfade the repeated segment with the sequence after
+                            for (var j = 0; j < sequence.length; ++j) {
+                                if (i * (repeatNum + Ls) + Ls + j >= audioSequence.data.length || j >= afterSequence.length)
+                                    break;
+                                audioSequence.data[i * (repeatNum + Ls) + Ls + j] *= (j / sequence.length)
+                                audioSequence.data[i * (repeatNum + Ls) + Ls + j] += afterSequence[j] * (1 - j / sequence.length)                                
+                            }
+
+                        }
+                    }
+
+                    channels[c].setAudioSequence(audioSequence);
+                }
+
                 break;
             
             default:
