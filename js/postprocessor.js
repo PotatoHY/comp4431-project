@@ -185,8 +185,8 @@ Postprocessor = {
                 var multiplier = parseFloat($("#time-multiplier").data("p" + pass));
                 if (multiplier == 1) break;
 
-                const Ls = sampleRate * 0.02;          // cut 15ms for every N samples
-                var repeatNum;                          // find N according to multiplier, repeat splice for every N samples
+                const Ls = sampleRate * parseFloat($("#ls").data("p" + pass)) / 1000;           // cut 15ms for every N samples
+                var repeatNum;                                                                  // find N according to multiplier, repeat splice for every N samples
 
                 if (multiplier > 1)
                     repeatNum = Math.floor((Ls * multiplier) / (multiplier - 1));
